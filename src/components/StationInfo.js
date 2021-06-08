@@ -16,7 +16,7 @@ function StationInfo({ stationId }) {
     `;
 
     const { loading, error, data } = useQuery(STATION_INFO, {
-        variables: { stationId },
+        variables: { id: stationId },
     });
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error :(</p>;
