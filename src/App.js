@@ -13,6 +13,8 @@ function App() {
             <ApolloProvider client={client}>
                 <div className="container">
                     <StationInfo stationId="134"></StationInfo>
+                    <StationInfo stationId="133"></StationInfo>
+                    <StationInfo stationId="290"></StationInfo>
                 </div>
             </ApolloProvider>
         </>

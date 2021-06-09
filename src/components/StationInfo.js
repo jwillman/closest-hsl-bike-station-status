@@ -17,15 +17,18 @@ function StationInfo({ stationId }) {
 
     const { loading, error, data } = useQuery(STATION_INFO, {
         variables: { id: stationId },
-        pollInterval: 5000,
+        pollInterval: 10000,
     });
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error :(</p>;
 
     return (
         <>
-            <h1>{data.bikeRentalStation.name}</h1>
-            <p>Pyöriä vapaana: {data.bikeRentalStation.bikesAvailable} </p>
+            <h2>{data.bikeRentalStation.name}</h2>
+            <p>
+                Pyöriä vapaana: <b>{data.bikeRentalStation.bikesAvailable}</b>
+                &nbsp;kpl
+            </p>
         </>
     );
 }
