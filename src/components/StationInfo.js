@@ -24,9 +24,10 @@ function StationInfo({ stationId }) {
 
     return (
         <>
-            <h2>{data.bikeRentalStation.name}</h2>
+            <h2>{data.bikeRentalStation.name} &nbsp;</h2>
             <p>
-                Pyöriä vapaana: <b>{data.bikeRentalStation.bikesAvailable}</b>
+                <span class="material-icons">pedal_bike</span> &nbsp;Pyöriä
+                vapaana: <b>{data.bikeRentalStation.bikesAvailable}</b>
                 &nbsp;kpl
             </p>
         </>
