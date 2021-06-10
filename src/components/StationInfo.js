@@ -33,12 +33,12 @@ function StationInfo({ stationId }) {
         <>
             <h2>
                 {" "}
-                {data.bikeRentalStation.name}
                 <a href={mapsUrl}>
                     <span className="material-icons md-18 google-maps-color">
                         place
                     </span>
-                </a>
+                </a>{" "}
+                {data.bikeRentalStation.name}
             </h2>
             <p>
                 <span
