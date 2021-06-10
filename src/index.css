@@ -16,6 +16,11 @@ span {
     vertical-align: middle;
 }
 
+.location {
+    position: absolute;
+    bottom: 1em;
+}
+
 /* Rules for sizing the icon. */
 .material-icons.md-18 {
     font-size: 18px;

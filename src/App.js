@@ -13,10 +13,10 @@ function App() {
         <>
             <ApolloProvider client={client}>
                 <div className="container">
-                    <Location></Location>
                     <StationInfo stationId="134"></StationInfo>
                     <StationInfo stationId="133"></StationInfo>
                     <StationInfo stationId="290"></StationInfo>
+                    <Location></Location>
                 </div>
             </ApolloProvider>
         </>

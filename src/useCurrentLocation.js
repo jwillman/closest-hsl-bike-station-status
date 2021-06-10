@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 
 const useCurrentLocation = (options = {}) => {
     // store error message in state
