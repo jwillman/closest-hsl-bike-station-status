@@ -19,16 +19,15 @@ function StationInfo({ stationId }) {
         variables: { id: stationId },
         pollInterval: 10000,
     });
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error :(</p>;
-    const inactive = data.bikeRentalStation.bikesAvailable === "0";
 
+    const inactive = data.bikeRentalStation.bikesAvailable === "0";
     const latLon = encodeURIComponent(
         data.bikeRentalStation.lat + "," + data.bikeRentalStation.lon
     );
-
     let mapsUrl = `https://www.google.com/maps/search/?api=1&query=${latLon}`;
-    console.log(mapsUrl);
+
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error :(</p>;
 
     return (
         <>
