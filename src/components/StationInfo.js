@@ -23,9 +23,24 @@ function StationInfo({ stationId }) {
     if (error) return <p>Error :(</p>;
     const inactive = data.bikeRentalStation.bikesAvailable === "0";
 
+    const latLon = encodeURIComponent(
+        data.bikeRentalStation.lat + "," + data.bikeRentalStation.lon
+    );
+
+    let mapsUrl = `https://www.google.com/maps/search/?api=1&query=${latLon}`;
+    console.log(mapsUrl);
+
     return (
         <>
-            <h2>{data.bikeRentalStation.name} &nbsp;</h2>
+            <h2>
+                {" "}
+                {data.bikeRentalStation.name}
+                <a href={mapsUrl}>
+                    <span className="material-icons md-18 google-maps-color">
+                        place
+                    </span>
+                </a>
+            </h2>
             <p>
                 <span
                     className={`material-icons md-dark ${
@@ -33,8 +48,8 @@ function StationInfo({ stationId }) {
                     }`}
                 >
                     pedal_bike
-                </span>{" "}
-                Pyöriä telineissä:{" "}
+                </span>
+                &nbsp; Pyöriä telineissä:{" "}
                 <b>{data.bikeRentalStation.bikesAvailable}</b> kpl
             </p>
         </>
