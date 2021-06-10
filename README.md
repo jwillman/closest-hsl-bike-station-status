@@ -1,5 +1,5 @@
 # closest-hsl-bike-station-status
 
-Shows some basic info of HSL City Bike station by station id.
+Shows how many free HSL bikes are available in certain stations.
 
 TODO: use Geolocation API to get user location

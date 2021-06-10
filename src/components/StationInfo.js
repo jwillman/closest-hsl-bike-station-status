@@ -21,14 +21,21 @@ function StationInfo({ stationId }) {
     });
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error :(</p>;
+    const inactive = data.bikeRentalStation.bikesAvailable === "0";
 
     return (
         <>
             <h2>{data.bikeRentalStation.name} &nbsp;</h2>
             <p>
-                <span class="material-icons">pedal_bike</span> &nbsp;Pyöriä
-                vapaana: <b>{data.bikeRentalStation.bikesAvailable}</b>
-                &nbsp;kpl
+                <span
+                    className={`material-icons md-dark ${
+                        inactive ? "md-inactive" : ""
+                    }`}
+                >
+                    pedal_bike
+                </span>{" "}
+                Pyöriä telineissä:{" "}
+                <b>{data.bikeRentalStation.bikesAvailable}</b> kpl
             </p>
         </>
     );
