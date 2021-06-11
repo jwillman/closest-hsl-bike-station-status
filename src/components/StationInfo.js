@@ -24,7 +24,7 @@ function StationInfo({ stationId }) {
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error :(</p>;
 
-    const inactive = data.bikeRentalStation.bikesAvailable === "0";
+    const inactive = data.bikeRentalStation.bikesAvailable === 0;
 
     let mapsUrl = utils.getGoogleMapsUrl(
         data.bikeRentalStation.lat,
