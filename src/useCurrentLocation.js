@@ -22,7 +22,7 @@ const useCurrentLocation = (locationRequested) => {
             // Using this option you can define when should the location request timeout and
             // call the error callback with timeout message.
             timeout: 1000 * 60 * 1, // 1 min (1000 ms * 60 sec * 1 minute = 60 000ms)
-            enableHighAccuracy: false,
+            enableHighAccuracy: true,
         });
     }, [locationRequested]);
 
