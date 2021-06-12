@@ -4,7 +4,7 @@ export const getGoogleMapsUrl = (lat, lon) => {
 };
 
 export function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
-    return equirectangular(lat1, lon1, lat2, lon2);
+    return haversine(lat1, lon1, lat2, lon2);
 }
 
 // Radius of the earth in km
@@ -12,12 +12,12 @@ const R = 6371;
 
 // Returns distance in km, haversine formula
 function haversine(lat1, lon1, lat2, lon2) {
-    let dLat = deg2rad(lat2 - lat1);
-    let dLon = deg2rad(lon2 - lon1);
+    let dLat = degToRad(lat2 - lat1);
+    let dLon = degToRad(lon2 - lon1);
     let a =
         Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.cos(deg2rad(lat1)) *
-            Math.cos(deg2rad(lat2)) *
+        Math.cos(degToRad(lat1)) *
+            Math.cos(degToRad(lat2)) *
             Math.sin(dLon / 2) *
             Math.sin(dLon / 2);
     let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
@@ -25,14 +25,15 @@ function haversine(lat1, lon1, lat2, lon2) {
     return d;
 }
 
+// TODO not working correctly, fix:
 // Returns distance in km, equirectangular approximation
-function equirectangular(lat1, lon1, lat2, lon2) {
-    let x = deg2rad(lon2 - lon1) + Math.cos(deg2rad(lat1 + lat2) / 2);
-    let y = deg2rad(lat2 - lat1);
-    let distance = Math.sqrt(x * x + y * y) * R;
-    return distance;
-}
+// function equirectangular(lat1, lon1, lat2, lon2) {
+//     let x = degToRad(lat2 - lat1) + Math.cos(degToRad(lon1 + lon2) / 2);
+//     let y = degToRad(lon2 - lon1);
+//     let distance = Math.sqrt(x * x + y * y) * R;
+//     return distance;
+// }
 
-function deg2rad(deg) {
+function degToRad(deg) {
     return deg * (Math.PI / 180);
 }

@@ -10,27 +10,23 @@ function App() {
         cache: new InMemoryCache(),
     });
 
-    const [stationIds, setStationIds] = useState(null);
+    const [stationId, setStationId] = useState(null);
 
     return (
         <>
             <ApolloProvider client={client}>
                 <div className="container">
-                    {/* {stationIds.map((stationId) => {
-                        return (
-                            <StationInfo
-                                key={stationId}
-                                stationId={stationId}
-                            ></StationInfo>
-                        );
-                    })} */}
-                    {stationIds != null && (
-                        <StationInfo stationId={stationIds}></StationInfo>
+                    {stationId != null && (
+                        <StationInfo stationId={stationId}></StationInfo>
                     )}
-                    <StationInfo stationId="134"></StationInfo>
-                    <StationInfo stationId="133"></StationInfo>
-                    <StationInfo stationId="290"></StationInfo>
-                    <Location setStationIds={setStationIds}></Location>
+                    {stationId == null && (
+                        <>
+                            <StationInfo stationId="134"></StationInfo>
+                            <StationInfo stationId="133"></StationInfo>
+                            <StationInfo stationId="290"></StationInfo>
+                        </>
+                    )}
+                    <Location setStationId={setStationId}></Location>
                 </div>
             </ApolloProvider>
         </>

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import useCurrentLocation from "./../useCurrentLocation";
 import * as utils from "./../utils.js";
 
-function Location({ setStationIds }) {
+function Location({ setStationId }) {
     const ALL_STATIONS = gql`
         query AllStations {
             bikeRentalStations {
@@ -68,7 +68,7 @@ function Location({ setStationIds }) {
             );
 
             console.log(closestStation);
-            setStationIds(closestStation[0].stationId);
+            setStationId(closestStation[0].stationId);
             setLocationRequested(false);
         }
     }, [
