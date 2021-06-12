@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import { useQuery, gql } from "@apollo/client";
+import * as utils from "./../utils.js";
 
 function StationInfo({ stationId }) {
     const STATION_INFO = gql`
@@ -23,11 +25,12 @@ function StationInfo({ stationId }) {
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error :(</p>;
 
-    const inactive = data.bikeRentalStation.bikesAvailable === "0";
-    const latLon = encodeURIComponent(
-        data.bikeRentalStation.lat + "," + data?.bikeRentalStation.lon
+    const inactive = data.bikeRentalStation.bikesAvailable === 0;
+
+    let mapsUrl = utils.getGoogleMapsUrl(
+        data.bikeRentalStation.lat,
+        data.bikeRentalStation.lon
     );
-    let mapsUrl = `https://www.google.com/maps/search/?api=1&query=${latLon}`;
 
     return (
         <>
