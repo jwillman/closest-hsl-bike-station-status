@@ -1,9 +1,11 @@
 import "./App.css";
-import { useEffect, useState } from "react";
 
+import { useEffect, useState } from "react";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
-import StationInfo from "./components/StationInfo.js";
-import Location from "./components/Location.js";
+
+import useStateWithLocalStorage from "./useStateWithLocalStorage";
+import StationInfo from "./components/StationInfo";
+import Location from "./components/Location";
 
 function App() {
     const client = new ApolloClient({
@@ -11,7 +13,10 @@ function App() {
         cache: new InMemoryCache(),
     });
 
-    const [stationIds, setStationIds] = useState([]);
+    const [stationIds, setStationIds] = useStateWithLocalStorage(
+        "stationIds",
+        []
+    );
 
     useEffect(() => {
         const queryParams = new URLSearchParams(window.location.search);
