@@ -1,3 +1,3 @@
 # closest-hsl-bike-station-status
 
-Shows how many free HSL bikes are available in certain stations.
+Shows how many HSL bikes are available at the nearest stations.
