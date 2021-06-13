@@ -1,5 +1,6 @@
 :root {
     --google-maps-color: #ea4335;
+    --primary-color: #fcbd1a;
 }
 
 body {
@@ -23,11 +24,17 @@ button {
     border-radius: 10px;
     margin: 1em;
     padding: 0.6em;
+    background-color: var(--primary-color);
 }
 
 .location {
     position: absolute;
     bottom: 1em;
+}
+
+.stationName {
+    text-decoration: none;
+    color: black;
 }
 
 .material-icons.google-maps-color {
