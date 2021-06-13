@@ -1,6 +1,74 @@
+:root {
+    --google-maps-color: #ea4335;
+    --primary-color: #fcbd1a;
+}
+
+span {
+    vertical-align: middle;
+}
+
+h2 {
+    margin-bottom: 0.3em;
+}
+
+button {
+    border-radius: 10px;
+    margin: 1em;
+    padding: 0.6em;
+    background-color: var(--primary-color);
+}
+
 .container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.stationInfo {
+    margin-bottom: 0.8em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.stationName {
+    text-decoration: none;
+    color: black;
+}
+
+.location {
+    position: absolute;
+    bottom: 1em;
+}
+
+.material-icons.google-maps-color {
+    color: var(--google-maps-color);
+}
+.material-icons.md-dark {
+    color: rgba(0, 0, 0, 0.54);
+}
+.material-icons.md-dark.md-inactive {
+    color: rgba(0, 0, 0, 0.26);
+}
+.material-icons.md-light {
+    color: rgba(255, 255, 255, 1);
+}
+.material-icons.md-light.md-inactive {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* Rules for sizing the icon. */
+.material-icons.md-18 {
+    font-size: 18px;
+}
+.material-icons.md-24 {
+    font-size: 24px;
+}
+.material-icons.md-36 {
+    font-size: 36px;
+}
+.material-icons.md-48 {
+    font-size: 48px;
 }
