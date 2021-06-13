@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { useQuery, gql } from "@apollo/client";
 import * as utils from "./../utils.js";
 
@@ -25,8 +24,9 @@ function StationInfo({ stationId }) {
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error :(</p>;
 
-    const inactive = data.bikeRentalStation.bikesAvailable === 0;
+    if (data.bikeRentalStation === null) return <div>Asemaa ei löytynyt</div>;
 
+    const inactive = data.bikeRentalStation.bikesAvailable === 0;
     let mapsUrl = utils.getGoogleMapsUrl(
         data.bikeRentalStation.lat,
         data.bikeRentalStation.lon
