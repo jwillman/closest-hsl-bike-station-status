@@ -18,7 +18,7 @@ function StationInfo({ stationId }) {
 
     const { loading, error, data } = useQuery(STATION_INFO, {
         variables: { id: stationId },
-        pollInterval: 10000,
+        pollInterval: 15000,
     });
 
     if (loading) return <p>Loading...</p>;
