@@ -27,6 +27,10 @@ button {
     background-color: var(--primary-color);
 }
 
+.stationInfo {
+    margin-bottom: 0.8em;
+}
+
 .location {
     position: absolute;
     bottom: 1em;

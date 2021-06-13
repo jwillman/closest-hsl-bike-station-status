@@ -33,7 +33,7 @@ function StationInfo({ stationId }) {
     );
 
     return (
-        <>
+        <div className="stationInfo">
             <h2>
                 {" "}
                 <a className="stationName" href={mapsUrl}>
@@ -55,7 +55,7 @@ function StationInfo({ stationId }) {
                 &nbsp; Pyöriä telineissä:{" "}
                 <b>{data.bikeRentalStation.bikesAvailable}</b> kpl
             </p>
-        </>
+        </div>
     );
 }
 
