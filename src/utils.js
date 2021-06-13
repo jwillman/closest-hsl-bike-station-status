@@ -3,6 +3,10 @@ export const getGoogleMapsUrl = (lat, lon) => {
     return `https://www.google.com/maps/search/?api=1&query=${latLon}`;
 };
 
+export const getGoogleMapsUrlDebugString = (lat, lon) => {
+    return `User lat: ${lat} lon: ${lon} url: ${getGoogleMapsUrl(lat, lon)}`;
+};
+
 export function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
     return haversine(lat1, lon1, lat2, lon2);
 }
@@ -24,15 +28,6 @@ function haversine(lat1, lon1, lat2, lon2) {
     let d = R * c;
     return d;
 }
-
-// TODO not working correctly, fix:
-// Returns distance in km, equirectangular approximation
-// function equirectangular(lat1, lon1, lat2, lon2) {
-//     let x = degToRad(lat2 - lat1) + Math.cos(degToRad(lon1 + lon2) / 2);
-//     let y = degToRad(lon2 - lon1);
-//     let distance = Math.sqrt(x * x + y * y) * R;
-//     return distance;
-// }
 
 function degToRad(deg) {
     return deg * (Math.PI / 180);

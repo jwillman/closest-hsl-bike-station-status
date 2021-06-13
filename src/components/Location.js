@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import useCurrentLocation from "./../useCurrentLocation";
 import * as utils from "./../utils.js";
 
-function Location({ setStationId }) {
+function Location({ setStationIds, stationCount = 5 }) {
     const ALL_STATIONS = gql`
         query AllStations {
             bikeRentalStations {
@@ -16,25 +16,17 @@ function Location({ setStationId }) {
         }
     `;
 
-    const { loading, error, data } = useQuery(ALL_STATIONS);
     const [locationRequested, setLocationRequested] = useState(false);
+    const { loading, error, data } = useQuery(ALL_STATIONS);
     const { location, locationError } = useCurrentLocation(locationRequested);
 
     useEffect(() => {
         if (
             location?.latitude != undefined &&
             location?.longitude != undefined &&
-            data?.bikeRentalStations != undefined
+            data?.bikeRentalStations != undefined &&
+            locationRequested === true
         ) {
-            let mapsUrl = utils.getGoogleMapsUrl(
-                location?.latitude,
-                location?.longitude
-            );
-
-            console.log(
-                `User lat: ${location?.latitude} lon: ${location?.longitude} url: ${mapsUrl}`
-            );
-
             let stationIdsWithDistance = data.bikeRentalStations.map((x) => {
                 return {
                     distance: utils.getDistanceFromLatLonInKm(
@@ -47,28 +39,12 @@ function Location({ setStationId }) {
                 };
             });
 
-            let closestStation = stationIdsWithDistance.reduce(
-                (result, item) => {
-                    let minDistance = result.length
-                        ? result[0].distance
-                        : item.distance;
+            stationIdsWithDistance.sort((a, b) => a.distance - b.distance);
+            const closestStationIds = stationIdsWithDistance
+                .slice(0, stationCount)
+                .map((item) => item.stationId);
 
-                    if (item.distance < minDistance) {
-                        minDistance = item.distance;
-                        result.length = 0;
-                    }
-
-                    if (item.distance === minDistance) {
-                        result.push(item);
-                    }
-
-                    return result;
-                },
-                []
-            );
-
-            console.log(closestStation);
-            setStationId(closestStation[0].stationId);
+            setStationIds(closestStationIds);
             setLocationRequested(false);
         }
     }, [
@@ -88,8 +64,8 @@ function Location({ setStationId }) {
     return (
         <div className="location">
             <button onClick={getLocation}>
-                <span className="material-icons">my_location</span> Hae lähin
-                asema
+                <span className="material-icons">my_location</span> Hae lähimmät
+                asemat
             </button>
         </div>
     );
