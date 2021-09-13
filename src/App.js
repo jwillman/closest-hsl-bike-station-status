@@ -1,6 +1,7 @@
 import "./App.css";
 
-import { useEffect, useState } from "react";
+import React from "react";
+import { useEffect } from "react";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
 import useStateWithLocalStorage from "./useStateWithLocalStorage";
