@@ -12,6 +12,7 @@ function Location({ setStationIds, stationCount = 5 }) {
                 stationId
                 lat
                 lon
+                state
             }
         }
     `;
@@ -27,17 +28,21 @@ function Location({ setStationIds, stationCount = 5 }) {
             data?.bikeRentalStations != undefined &&
             locationRequested === true
         ) {
-            let stationIdsWithDistance = data.bikeRentalStations.map((x) => {
-                return {
-                    distance: utils.getDistanceFromLatLonInKm(
-                        location.latitude,
-                        location.longitude,
-                        x.lat,
-                        x.lon
-                    ),
-                    stationId: x.stationId,
-                };
-            });
+            let stationIdsWithDistance = data.bikeRentalStations
+                .filter(function (station) {
+                    return station.state === "Station on";
+                })
+                .map((x) => {
+                    return {
+                        distance: utils.getDistanceFromLatLonInKm(
+                            location.latitude,
+                            location.longitude,
+                            x.lat,
+                            x.lon
+                        ),
+                        stationId: x.stationId,
+                    };
+                });
 
             stationIdsWithDistance.sort((a, b) => a.distance - b.distance);
             const closestStationIds = stationIdsWithDistance
