@@ -1,13 +1,18 @@
-export const getGoogleMapsUrl = (lat, lon) => {
+export const getGoogleMapsUrl = (lat?: number, lon?: number) => {
     const latLon = encodeURIComponent(lat + "," + lon);
     return `https://www.google.com/maps/search/?api=1&query=${latLon}`;
 };
 
-export const getGoogleMapsUrlDebugString = (lat, lon) => {
+export const getGoogleMapsUrlDebugString = (lat: number, lon: number) => {
     return `User lat: ${lat} lon: ${lon} url: ${getGoogleMapsUrl(lat, lon)}`;
 };
 
-export function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+export function getDistanceFromLatLonInKm(
+    lat1: number,
+    lon1: number,
+    lat2: number,
+    lon2: number
+) {
     return haversine(lat1, lon1, lat2, lon2);
 }
 
@@ -15,7 +20,7 @@ export function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
 const R = 6371;
 
 // Returns distance in km, haversine formula
-function haversine(lat1, lon1, lat2, lon2) {
+function haversine(lat1: number, lon1: number, lat2: number, lon2: number) {
     let dLat = degToRad(lat2 - lat1);
     let dLon = degToRad(lon2 - lon1);
     let a =
@@ -29,6 +34,6 @@ function haversine(lat1, lon1, lat2, lon2) {
     return d;
 }
 
-function degToRad(deg) {
+function degToRad(deg: number) {
     return deg * (Math.PI / 180);
 }

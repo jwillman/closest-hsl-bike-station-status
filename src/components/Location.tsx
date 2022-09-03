@@ -1,12 +1,28 @@
 import { useQuery, gql } from "@apollo/client";
 import { useEffect, useState } from "react";
-
 import useCurrentLocation from "../hooks/useCurrentLocation";
-import * as utils from "./../utils.js";
+import * as utils from "../utils/utils";
 
 type LocationProps = {
-    setStationIds: (a: any) => void;
+    setStationIds: (a: Array<string>) => void;
     stationCount?: number;
+};
+
+type BikeRentalStationsQuery = {
+    bikeRentalStations: Array<BikeRentalStationItem>;
+};
+
+type BikeRentalStationItem = {
+    name: string;
+    stationId: string;
+    lat: number;
+    lon: number;
+    state: string;
+};
+
+type Station = {
+    distance: number;
+    stationId: string;
 };
 
 const Location: React.FC<LocationProps> = ({
@@ -26,7 +42,8 @@ const Location: React.FC<LocationProps> = ({
     `;
 
     const [locationRequested, setLocationRequested] = useState(false);
-    const { loading, error, data } = useQuery(ALL_STATIONS);
+    const { loading, error, data } =
+        useQuery<BikeRentalStationsQuery>(ALL_STATIONS);
     const { location } = useCurrentLocation(locationRequested);
 
     useEffect(() => {
@@ -37,10 +54,10 @@ const Location: React.FC<LocationProps> = ({
             locationRequested === true
         ) {
             let stationIdsWithDistance = data.bikeRentalStations
-                .filter(function (station: any) {
+                .filter(function (station: BikeRentalStationItem) {
                     return station.state === "Station on";
                 })
-                .map((x: any) => {
+                .map((x: BikeRentalStationItem) => {
                     return {
                         distance: utils.getDistanceFromLatLonInKm(
                             location.latitude,
@@ -49,15 +66,15 @@ const Location: React.FC<LocationProps> = ({
                             x.lon
                         ),
                         stationId: x.stationId,
-                    };
+                    } as Station;
                 });
 
             stationIdsWithDistance.sort(
-                (a: any, b: any) => a.distance - b.distance
+                (a: Station, b: Station) => a.distance - b.distance
             );
             const closestStationIds = stationIdsWithDistance
                 .slice(0, stationCount)
-                .map((item: any) => item.stationId);
+                .map((item: Station) => item.stationId);
 
             setStationIds(closestStationIds);
             setLocationRequested(false);
@@ -77,6 +94,7 @@ const Location: React.FC<LocationProps> = ({
         setLocationRequested(true);
     };
 
+    // TODO localize texts
     return (
         <div className="location">
             <button onClick={getLocation}>

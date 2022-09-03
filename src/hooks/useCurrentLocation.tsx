@@ -6,18 +6,16 @@ type Location = {
 };
 
 const useCurrentLocation = (locationRequested: any) => {
-    // store error message in state
-    const [error, setError] = useState<string>();
-
-    // store location in state
+    const [errorMessage, setErrorMessage] = useState<string>();
     const [location, setLocation] = useState<Location>();
 
     useEffect(() => {
         if (!locationRequested) return;
 
         // If the geolocation is not defined in the used browser you can handle it as an error
+        // TODO localize error message
         if (!navigator.geolocation) {
-            setError("Geolocation is not supported.");
+            setErrorMessage("Geolocation is not supported.");
             return;
         }
 
@@ -31,8 +29,8 @@ const useCurrentLocation = (locationRequested: any) => {
         });
     }, [locationRequested]);
 
-    // Success handler for geolocation's `getCurrentPosition` method
-    const handleSuccess = (position: any) => {
+    // Success handler for geolocations getCurrentPosition method
+    const handleSuccess = (position: GeolocationPosition) => {
         const { latitude, longitude } = position.coords;
 
         setLocation({
@@ -41,12 +39,12 @@ const useCurrentLocation = (locationRequested: any) => {
         });
     };
 
-    // Error handler for geolocation's `getCurrentPosition` method
-    const handleError = (error: any) => {
-        setError(error.message);
+    // Error handler for geolocations getCurrentPosition method
+    const handleError = (error: GeolocationPositionError) => {
+        setErrorMessage(error.message);
     };
 
-    return { location, error };
+    return { location, error: errorMessage };
 };
 
 export default useCurrentLocation;
