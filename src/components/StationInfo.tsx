@@ -1,7 +1,11 @@
 import { useQuery, gql } from "@apollo/client";
 import * as utils from "./../utils.js";
 
-function StationInfo({ stationId }) {
+type StationInfoProps = {
+    stationId: any;
+};
+
+const StationInfo: React.FC<StationInfoProps> = ({ stationId }) => {
     const STATION_INFO = gql`
         query StationInfo($id: String!) {
             bikeRentalStation(id: $id) {
@@ -57,6 +61,6 @@ function StationInfo({ stationId }) {
             </p>
         </div>
     );
-}
+};
 
 export default StationInfo;

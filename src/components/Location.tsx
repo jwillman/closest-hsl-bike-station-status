@@ -1,10 +1,18 @@
 import { useQuery, gql } from "@apollo/client";
 import { useEffect, useState } from "react";
 
-import useCurrentLocation from "./../useCurrentLocation";
+import useCurrentLocation from "../hooks/useCurrentLocation";
 import * as utils from "./../utils.js";
 
-function Location({ setStationIds, stationCount = 5 }) {
+type LocationProps = {
+    setStationIds: (a: any) => void;
+    stationCount?: number;
+};
+
+const Location: React.FC<LocationProps> = ({
+    setStationIds,
+    stationCount = 5,
+}) => {
     const ALL_STATIONS = gql`
         query AllStations {
             bikeRentalStations {
@@ -29,10 +37,10 @@ function Location({ setStationIds, stationCount = 5 }) {
             locationRequested === true
         ) {
             let stationIdsWithDistance = data.bikeRentalStations
-                .filter(function (station) {
+                .filter(function (station: any) {
                     return station.state === "Station on";
                 })
-                .map((x) => {
+                .map((x: any) => {
                     return {
                         distance: utils.getDistanceFromLatLonInKm(
                             location.latitude,
@@ -44,10 +52,12 @@ function Location({ setStationIds, stationCount = 5 }) {
                     };
                 });
 
-            stationIdsWithDistance.sort((a, b) => a.distance - b.distance);
+            stationIdsWithDistance.sort(
+                (a: any, b: any) => a.distance - b.distance
+            );
             const closestStationIds = stationIdsWithDistance
                 .slice(0, stationCount)
-                .map((item) => item.stationId);
+                .map((item: any) => item.stationId);
 
             setStationIds(closestStationIds);
             setLocationRequested(false);
@@ -75,6 +85,6 @@ function Location({ setStationIds, stationCount = 5 }) {
             </button>
         </div>
     );
-}
+};
 
 export default Location;

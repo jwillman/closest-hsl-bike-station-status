@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
 
-const useCurrentLocation = (locationRequested) => {
+type Location = {
+    latitude: number;
+    longitude: number;
+};
+
+const useCurrentLocation = (locationRequested: any) => {
     // store error message in state
-    const [error, setError] = useState();
+    const [error, setError] = useState<string>();
 
     // store location in state
-    const [location, setLocation] = useState();
+    const [location, setLocation] = useState<Location>();
 
     useEffect(() => {
         if (!locationRequested) return;
@@ -27,7 +32,7 @@ const useCurrentLocation = (locationRequested) => {
     }, [locationRequested]);
 
     // Success handler for geolocation's `getCurrentPosition` method
-    const handleSuccess = (position) => {
+    const handleSuccess = (position: any) => {
         const { latitude, longitude } = position.coords;
 
         setLocation({
@@ -37,7 +42,7 @@ const useCurrentLocation = (locationRequested) => {
     };
 
     // Error handler for geolocation's `getCurrentPosition` method
-    const handleError = (error) => {
+    const handleError = (error: any) => {
         setError(error.message);
     };
 
