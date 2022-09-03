@@ -13,9 +13,11 @@ function App() {
         cache: new InMemoryCache(),
     });
 
-    const [stationIds, setStationIds] = useStateWithLocalStorage(
-        "stationIds",
-        []
+    const [stationIds, setStationIds] = useStateWithLocalStorage<Array<string>>(
+        {
+            localStorageKey: "stationIds",
+            defaultValue: [],
+        }
     );
 
     useEffect(() => {
