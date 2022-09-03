@@ -19,13 +19,13 @@ function Location({ setStationIds, stationCount = 5 }) {
 
     const [locationRequested, setLocationRequested] = useState(false);
     const { loading, error, data } = useQuery(ALL_STATIONS);
-    const { location, locationError } = useCurrentLocation(locationRequested);
+    const { location } = useCurrentLocation(locationRequested);
 
     useEffect(() => {
         if (
-            location?.latitude != undefined &&
-            location?.longitude != undefined &&
-            data?.bikeRentalStations != undefined &&
+            location?.latitude !== undefined &&
+            location?.longitude !== undefined &&
+            data?.bikeRentalStations !== undefined &&
             locationRequested === true
         ) {
             let stationIdsWithDistance = data.bikeRentalStations
@@ -52,6 +52,7 @@ function Location({ setStationIds, stationCount = 5 }) {
             setStationIds(closestStationIds);
             setLocationRequested(false);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
         data?.bikeRentalStations,
         location?.latitude,

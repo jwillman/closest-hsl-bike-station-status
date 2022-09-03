@@ -1,6 +1,6 @@
 import "./App.css";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
 import useStateWithLocalStorage from "./useStateWithLocalStorage";
@@ -25,6 +25,7 @@ function App() {
             const ids = id.split(",");
             setStationIds(ids);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const stationInfos = stationIds.map((stationId) => (
