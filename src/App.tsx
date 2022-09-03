@@ -3,7 +3,7 @@ import "./App.css";
 import { useEffect } from "react";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
-import useStateWithLocalStorage from "./useStateWithLocalStorage";
+import useStateWithLocalStorage from "./hooks/useStateWithLocalStorage";
 import StationInfo from "./components/StationInfo";
 import Location from "./components/Location";
 
@@ -28,7 +28,7 @@ function App() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const stationInfos = stationIds.map((stationId) => (
+    const stationInfos = stationIds.map((stationId: any) => (
         <StationInfo key={stationId} stationId={stationId}></StationInfo>
     ));
 
