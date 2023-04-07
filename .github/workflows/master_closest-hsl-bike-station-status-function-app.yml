@@ -28,9 +28,7 @@ jobs:
             - name: "Resolve Project Dependencies Using Dotnet"
               shell: bash
               run: |
-                  ls
-                  pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
-                  ls
+                  pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/api'
                   dotnet build --configuration Release --output ./output
                   popd
 
