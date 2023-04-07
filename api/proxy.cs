@@ -41,9 +41,9 @@ namespace api
             newRequest.Content = requestContent;
 
             // TODO this is only for testing, remove:
-            HttpClientHandler clientHandler = new HttpClientHandler();
-            clientHandler.ServerCertificateCustomValidationCallback = 
-                (sender, cert, chain, sslPolicyErrors) => { return true; };
+            // HttpClientHandler clientHandler = new HttpClientHandler();
+            // clientHandler.ServerCertificateCustomValidationCallback = 
+            //     (sender, cert, chain, sslPolicyErrors) => { return true; };
 
             var httpClient = new HttpClient(clientHandler);
             var response = await httpClient.SendAsync(newRequest);
