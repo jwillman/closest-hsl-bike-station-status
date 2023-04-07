@@ -1,15 +1,35 @@
 import "./App.css";
 
 import { useEffect } from "react";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import {
+    ApolloClient,
+    InMemoryCache,
+    ApolloProvider,
+    createHttpLink,
+} from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
 
 import useStateWithLocalStorage from "./hooks/useStateWithLocalStorage";
 import StationInfo from "./components/StationInfo";
 import Location from "./components/Location";
 
 function App() {
-    const client = new ApolloClient({
+    // Create an http link to the GraphQL server
+    const httpLink = createHttpLink({
         uri: "https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql",
+    });
+
+    // Create a link that adds a custom header to all requests
+    const authLink = setContext((_, { headers }) => {
+        return {
+            headers: {
+                ...headers,
+            },
+        };
+    });
+
+    const client = new ApolloClient({
+        link: authLink.concat(httpLink),
         cache: new InMemoryCache(),
     });
 
