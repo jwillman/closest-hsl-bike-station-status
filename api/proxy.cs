@@ -40,6 +40,7 @@ namespace api
                 Encoding.UTF8.GetString(ms.ToArray()), Encoding.UTF8, "application/json");
             newRequest.Content = requestContent;
 
+            // TODO this is only for testing, remove:
             HttpClientHandler clientHandler = new HttpClientHandler();
             clientHandler.ServerCertificateCustomValidationCallback = 
                 (sender, cert, chain, sslPolicyErrors) => { return true; };
