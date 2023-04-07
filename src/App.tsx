@@ -16,7 +16,8 @@ import Location from "./components/Location";
 function App() {
     // Create an http link to the GraphQL server
     const httpLink = createHttpLink({
-        uri: "https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql",
+        uri: "http://localhost:7071/api/proxy",
+        //uri: "https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql",
     });
 
     // Create a link that adds a custom header to all requests
@@ -24,6 +25,8 @@ function App() {
         return {
             headers: {
                 ...headers,
+                "digitransit-subscription-key":
+                    "9d70d974e06d4ebbbf2acd97aa427600",
             },
         };
     });
