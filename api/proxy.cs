@@ -8,7 +8,6 @@ using System.Net.Http;
 using System.IO;
 using System.Text;
 
-
 namespace api
 {
     public static class proxy
@@ -18,6 +17,12 @@ namespace api
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest request,
             ILogger log)
         {
+            // Check that the request comes from the correct origin
+            if (request.Headers["Origin"] != "https://hsl.willman.dev/")
+            {
+                return new HttpResponseMessage(System.Net.HttpStatusCode.Forbidden);
+            }
+
             string digitransitSubscriptionKey = Environment.GetEnvironmentVariable("DIGITRANSIT_SUBSCRIPTION_KEY");
 
             var newRequest = new HttpRequestMessage
