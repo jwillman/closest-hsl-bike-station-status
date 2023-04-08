@@ -16,8 +16,7 @@ import Location from "./components/Location";
 function App() {
     // Create an http link to the GraphQL server
     const httpLink = createHttpLink({
-        uri: "http://localhost:7071/api/proxy",
-        //uri: "https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql",
+        uri: "https://closest-hsl-bike-station-status-function-app.azurewebsites.net",
     });
 
     // Create a link that adds a custom header to all requests
