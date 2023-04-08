@@ -15,7 +15,7 @@ namespace api
     {
         [FunctionName("proxy")]
         public static async Task<HttpResponseMessage> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest request,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest request,
             ILogger log)
         {
             string digitransitSubscriptionKey = Environment.GetEnvironmentVariable("DIGITRANSIT_SUBSCRIPTION_KEY");
