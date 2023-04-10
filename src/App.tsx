@@ -24,8 +24,6 @@ function App() {
         return {
             headers: {
                 ...headers,
-                "digitransit-subscription-key":
-                    "9d70d974e06d4ebbbf2acd97aa427600",
             },
         };
     });
