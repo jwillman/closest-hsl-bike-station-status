@@ -1,6 +1,4 @@
-import "./App.css";
-
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import {
     ApolloClient,
     InMemoryCache,
@@ -9,17 +7,16 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 
+import "./App.css";
 import useStateWithLocalStorage from "./hooks/useStateWithLocalStorage";
 import StationInfo from "./components/StationInfo";
 import Location from "./components/Location";
 
-function App() {
-    // Create an http link to the GraphQL server
+const App = () => {
     const httpLink = createHttpLink({
-        uri: "https://closest-hsl-bike-station-status-function-app.azurewebsites.net/api/proxy",
+        uri: process.env.REACT_APP_API_URL || "http://localhost:7071/api/proxy",
     });
 
-    // Create a link that adds a custom header to all requests
     const authLink = setContext((_, { headers }) => {
         return {
             headers: {
@@ -43,27 +40,25 @@ function App() {
     useEffect(() => {
         const queryParams = new URLSearchParams(window.location.search);
         const id = queryParams.get("id");
-        if (id != null) {
+
+        if (id) {
             const ids = id.split(",");
             setStationIds(ids);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [setStationIds]);
 
-    const stationInfos = stationIds.map((stationId: any) => (
-        <StationInfo key={stationId} stationId={stationId}></StationInfo>
+    const stationInfos = stationIds.map((stationId) => (
+        <StationInfo key={stationId} stationId={stationId} />
     ));
 
     return (
-        <>
-            <ApolloProvider client={client}>
-                <div className="container">
-                    {stationInfos}
-                    <Location setStationIds={setStationIds}></Location>
-                </div>
-            </ApolloProvider>
-        </>
+        <ApolloProvider client={client}>
+            <div className="container">
+                {stationInfos}
+                <Location setStationIds={setStationIds} />
+            </div>
+        </ApolloProvider>
     );
-}
+};
 
 export default App;
