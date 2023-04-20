@@ -10,8 +10,23 @@ Create a .env file in the project root for development containing:
 
 REACT_APP_API_URL=http://localhost:7071/api/proxy
 
-# Starting local development
+# Starting local development for the frontend
 
-Run in project root: npm install && npm start to run the frontend
+Run in project root:
+`npm install && npm start`
 
-TODO: how to run the backend / api
+# Starting local development for the Azure Functions Backend / API
+
+1. Add a local.settings.json file in the project root
+2. Include the environment variables:
+    ```
+    {
+    "IsEncrypted": false,
+    "Values": {
+        "AzureWebJobsStorage": "",
+        "FUNCTIONS_WORKER_RUNTIME": "node",
+        "CLIENT_URL": "YourClientURL",
+        "DIGITRANSIT_SUBSCRIPTION_KEY": "YourSubscriptionKey"
+        }
+    }
+    ```
