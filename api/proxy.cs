@@ -18,7 +18,7 @@ namespace api
             ILogger log)
         {
             // Check that the request comes from the correct origin
-            if (request.Headers["Origin"] != Environment.GetEnvironmentVariable("CLIENT_URL"))
+            if (request.Headers["Origin"][0] != Environment.GetEnvironmentVariable("CLIENT_URL"))
             {
                 return new HttpResponseMessage(System.Net.HttpStatusCode.Forbidden);
             }
