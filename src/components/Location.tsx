@@ -4,7 +4,7 @@ import useCurrentLocation from "../hooks/useCurrentLocation";
 import * as utils from "../utils/utils";
 
 type LocationProps = {
-    setStationIds: (a: Array<string>) => void;
+    setStationIds: (stations: Array<string>) => void;
     stationCount?: number;
 };
 
@@ -25,53 +25,46 @@ type Station = {
     stationId: string;
 };
 
+const ALL_STATIONS = gql`
+    query AllStations {
+        bikeRentalStations {
+            name
+            stationId
+            lat
+            lon
+            state
+        }
+    }
+`;
+
 const Location: React.FC<LocationProps> = ({
     setStationIds,
     stationCount = 5,
 }) => {
-    const ALL_STATIONS = gql`
-        query AllStations {
-            bikeRentalStations {
-                name
-                stationId
-                lat
-                lon
-                state
-            }
-        }
-    `;
-
     const [locationRequested, setLocationRequested] = useState(false);
     const { loading, error, data } =
         useQuery<BikeRentalStationsQuery>(ALL_STATIONS);
     const { location } = useCurrentLocation(locationRequested);
 
     useEffect(() => {
-        if (
-            location?.latitude !== undefined &&
-            location?.longitude !== undefined &&
-            data?.bikeRentalStations !== undefined &&
-            locationRequested === true
-        ) {
-            let stationIdsWithDistance = data.bikeRentalStations
-                .filter(function (station: BikeRentalStationItem) {
-                    return station.state === "Station on";
-                })
-                .map((x: BikeRentalStationItem) => {
-                    return {
-                        distance: utils.getDistanceFromLatLonInKm(
-                            location.latitude,
-                            location.longitude,
-                            x.lat,
-                            x.lon
-                        ),
-                        stationId: x.stationId,
-                    } as Station;
-                });
+        if (location && data?.bikeRentalStations && locationRequested) {
+            const stationIdsWithDistance = data.bikeRentalStations
+                .filter(
+                    (station: BikeRentalStationItem) =>
+                        station.state === "Station on"
+                )
+                .map((station: BikeRentalStationItem) => ({
+                    distance: utils.getDistanceFromLatLonInKm(
+                        location.latitude,
+                        location.longitude,
+                        station.lat,
+                        station.lon
+                    ),
+                    stationId: station.stationId,
+                }));
 
-            stationIdsWithDistance.sort(
-                (a: Station, b: Station) => a.distance - b.distance
-            );
+            stationIdsWithDistance.sort((a, b) => a.distance - b.distance);
+
             const closestStationIds = stationIdsWithDistance
                 .slice(0, stationCount)
                 .map((item: Station) => item.stationId);
@@ -79,12 +72,12 @@ const Location: React.FC<LocationProps> = ({
             setStationIds(closestStationIds);
             setLocationRequested(false);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
         data?.bikeRentalStations,
-        location?.latitude,
-        location?.longitude,
+        location,
         locationRequested,
+        setStationIds,
+        stationCount,
     ]);
 
     if (loading) return <p>Loading...</p>;

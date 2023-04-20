@@ -5,7 +5,7 @@ type Location = {
     longitude: number;
 };
 
-const useCurrentLocation = (locationRequested: any) => {
+const useCurrentLocation = (locationRequested: boolean) => {
     const [errorMessage, setErrorMessage] = useState<string>();
     const [location, setLocation] = useState<Location>();
 
@@ -13,8 +13,8 @@ const useCurrentLocation = (locationRequested: any) => {
         if (!locationRequested) return;
 
         // If the geolocation is not defined in the used browser you can handle it as an error
-        // TODO localize error message
         if (!navigator.geolocation) {
+            // TODO localize error message
             setErrorMessage("Geolocation is not supported.");
             return;
         }

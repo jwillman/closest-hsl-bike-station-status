@@ -2,7 +2,7 @@ import { useQuery, gql } from "@apollo/client";
 import * as utils from "../utils/utils";
 
 type StationInfoProps = {
-    stationId: any;
+    stationId: string;
 };
 
 type BikeRentalStationQuery = {
@@ -19,21 +19,21 @@ type BikeRentalStationItem = {
     allowDropoff: boolean;
 };
 
-const StationInfo: React.FC<StationInfoProps> = ({ stationId }) => {
-    const STATION_INFO = gql`
-        query StationInfo($id: String!) {
-            bikeRentalStation(id: $id) {
-                stationId
-                name
-                bikesAvailable
-                spacesAvailable
-                lat
-                lon
-                allowDropoff
-            }
+const STATION_INFO = gql`
+    query StationInfo($id: String!) {
+        bikeRentalStation(id: $id) {
+            stationId
+            name
+            bikesAvailable
+            spacesAvailable
+            lat
+            lon
+            allowDropoff
         }
-    `;
+    }
+`;
 
+const StationInfo: React.FC<StationInfoProps> = ({ stationId }) => {
     const { loading, error, data } = useQuery<BikeRentalStationQuery>(
         STATION_INFO,
         {
@@ -45,27 +45,24 @@ const StationInfo: React.FC<StationInfoProps> = ({ stationId }) => {
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error :(</p>;
 
-    if (data?.bikeRentalStation === null) return <div>Asemaa ei löytynyt</div>;
+    if (!data?.bikeRentalStation) return <div>Asemaa ei löytynyt</div>;
 
-    const inactive = data?.bikeRentalStation?.bikesAvailable === 0;
+    const { bikesAvailable, lat, lon, name } = data.bikeRentalStation;
 
-    let mapsUrl = utils.getGoogleMapsUrl(
-        data?.bikeRentalStation?.lat,
-        data?.bikeRentalStation?.lon
-    );
+    const inactive = bikesAvailable === 0;
+    const mapsUrl = utils.getGoogleMapsUrl(lat, lon);
 
     // TODO localize texts
     return (
         <div className="stationInfo">
             <h2>
-                {" "}
                 <a className="stationName" href={mapsUrl}>
                     <span className="material-icons md-18 google-maps-color">
                         place
                     </span>
                     &nbsp;
-                    {data?.bikeRentalStation.name}
-                </a>{" "}
+                    {name}
+                </a>
             </h2>
             <p>
                 <span
@@ -75,8 +72,7 @@ const StationInfo: React.FC<StationInfoProps> = ({ stationId }) => {
                 >
                     pedal_bike
                 </span>
-                &nbsp; Pyöriä telineissä:{" "}
-                <b>{data?.bikeRentalStation.bikesAvailable}</b> kpl
+                &nbsp; Pyöriä telineissä: <b>{bikesAvailable}</b> kpl
             </p>
         </div>
     );
