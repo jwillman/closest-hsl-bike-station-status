@@ -17,6 +17,7 @@ namespace api
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest request,
             ILogger log)
         {
+            
             // Check that the request comes from the correct origin
             if (request.Headers["Origin"][0] != Environment.GetEnvironmentVariable("CLIENT_URL"))
             {
